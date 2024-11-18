@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "github-fork-ribbon-css/gh-fork-ribbon.css";
 import "./App.css";
 import Navbar from "./Navbar";
 import PayPalFeeCalculator from "./PayPalFeeCalculator";
@@ -19,7 +20,6 @@ function App() {
                         backgroundColor: "white",
                     }}
                 >
-                    {/* Added heading */}
                     <Typography
                         variant="h4"
                         gutterBottom
@@ -34,6 +34,15 @@ function App() {
                     </Routes>
                 </Box>
             </Container>
+
+            <a
+                className="github-fork-ribbon right-bottom"
+                href="https://github.com/dikayx/paypal-fee-calculator"
+                data-ribbon="Fork me on GitHub"
+                title="Fork me on GitHub"
+            >
+                Fork me on GitHub
+            </a>
         </Router>
     );
 }
