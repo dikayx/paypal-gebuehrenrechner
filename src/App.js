@@ -8,9 +8,9 @@ import { Container, Box, Typography } from "@mui/material";
 
 function App() {
     return (
-        <Router>
+        <Router basename="/paypal-fee-calculator">
             <Navbar />
-            <Container maxWidth='lg' sx={{ mt: 4 }}>
+            <Container maxWidth="lg" sx={{ mt: 4 }}>
                 <Box
                     sx={{
                         p: 3,
@@ -21,7 +21,7 @@ function App() {
                 >
                     {/* Added heading */}
                     <Typography
-                        variant='h4'
+                        variant="h4"
                         gutterBottom
                         sx={{ textAlign: "center", mb: 4 }}
                     >
@@ -29,11 +29,8 @@ function App() {
                     </Typography>
 
                     <Routes>
-                        <Route path='/' element={<PayPalFeeCalculator />} />
-                        <Route
-                            path='/fees-overview'
-                            element={<FeesOverview />}
-                        />
+                        <Route path="/" element={<PayPalFeeCalculator />} />
+                        <Route path="/fees-overview" element={<FeesOverview />} />
                     </Routes>
                 </Box>
             </Container>
