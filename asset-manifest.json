@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/dikayx.github.io/paypal-fee-calculator/static/css/main.f855e6bc.css",
+    "main.js": "/dikayx.github.io/paypal-fee-calculator/static/js/main.f77475be.js",
+    "static/js/453.86711cd9.chunk.js": "/dikayx.github.io/paypal-fee-calculator/static/js/453.86711cd9.chunk.js",
+    "index.html": "/dikayx.github.io/paypal-fee-calculator/index.html",
+    "main.f855e6bc.css.map": "/dikayx.github.io/paypal-fee-calculator/static/css/main.f855e6bc.css.map",
+    "main.f77475be.js.map": "/dikayx.github.io/paypal-fee-calculator/static/js/main.f77475be.js.map",
+    "453.86711cd9.chunk.js.map": "/dikayx.github.io/paypal-fee-calculator/static/js/453.86711cd9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f855e6bc.css",
+    "static/js/main.f77475be.js"
+  ]
+}
