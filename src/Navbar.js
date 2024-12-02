@@ -35,7 +35,7 @@ function Navbar() {
                             to='/fees-overview'
                             sx={{ textTransform: "none" }}
                         >
-                            Fees Overview
+                            Gebührenübersicht
                         </Button>
                     </Box>
                 </Container>
