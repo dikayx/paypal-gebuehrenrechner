@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/paypal-fee-calculator/static/css/main.cc37661e.css",
-    "main.js": "/paypal-fee-calculator/static/js/main.29e1f931.js",
+    "main.js": "/paypal-fee-calculator/static/js/main.4843c70c.js",
     "static/js/453.86711cd9.chunk.js": "/paypal-fee-calculator/static/js/453.86711cd9.chunk.js",
     "index.html": "/paypal-fee-calculator/index.html",
     "main.cc37661e.css.map": "/paypal-fee-calculator/static/css/main.cc37661e.css.map",
-    "main.29e1f931.js.map": "/paypal-fee-calculator/static/js/main.29e1f931.js.map",
+    "main.4843c70c.js.map": "/paypal-fee-calculator/static/js/main.4843c70c.js.map",
     "453.86711cd9.chunk.js.map": "/paypal-fee-calculator/static/js/453.86711cd9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.cc37661e.css",
-    "static/js/main.29e1f931.js"
+    "static/js/main.4843c70c.js"
   ]
 }
