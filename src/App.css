@@ -1,9 +1,48 @@
-.github-fork-ribbon.right-bottom:before {
-  background-color: #1976d2;
+.github-fork-ribbon {
+    position: fixed;
+    z-index: 1000;
 }
 
-@media (max-width: 768px) {
-  .github-fork-ribbon {
+/* Anchor the ribbon to the top right or top left of the viewport */
+.github-fork-ribbon.right-bottom {
+    right: 0;
+    bottom: 0;
+}
+
+.github-fork-ribbon.right-bottom:before {
+    background-color: #1976d2;
+}
+
+/* GitHub Circle Button (Mobile) */
+.github-circle.right-bottom-mobile {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    background-color: #1976d2;
+    color: white;
+    border-radius: 50%;
+    padding: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    text-decoration: none;
     display: none;
-  }
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+/* GitHub Icon Style */
+.github-icon {
+    font-size: 24px; /* Size of the GitHub icon */
+}
+
+/* Media Queries for Mobile */
+@media (max-width: 600px) {
+    .github-fork-ribbon.right-bottom {
+        display: none;
+    }
+
+    .github-circle.right-bottom-mobile {
+        display: flex;
+    }
 }
