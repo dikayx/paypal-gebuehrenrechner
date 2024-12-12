@@ -10,7 +10,6 @@ import {
     Button,
     Card,
     MenuItem,
-    Select,
 } from "@mui/material";
 
 function PayPalFeeCalculator() {
@@ -21,15 +20,15 @@ function PayPalFeeCalculator() {
     const [finalAmount, setFinalAmount] = useState("");
 
     const feeRates = {
-        1: { rate: 0.0249, fixed: 0.35 }, // Waren oder Dienstleistungen bezahlen
-        2: { rate: 0, fixed: 0 }, // Zahlung an Freunde und Familie (Kostenfrei für Inlandsüberweisungen)
-        3: { rate: 0.015, fixed: 0.35 }, // Spenden sammeln
-        4: { rate: 0.1, fixed: 0.1 }, // Mikrozahlung (Inländisch unter 5 €)
-        5: { rate: 0.0249, fixed: 0.35 }, // Händlerkonditionen < 2.000 €
-        6: { rate: 0.0219, fixed: 0.35 }, // Händlerkonditionen 2.000 - 5.000 €
-        7: { rate: 0.0199, fixed: 0.35 }, // Händlerkonditionen 5.000 - 25.000 €
-        8: { rate: 0.0149, fixed: 0.35 }, // Händlerkonditionen > 25.000 €
-        9: { rate: 0.012, fixed: 0.35 }, // Zahlung mit QR-Code (Assuming 1.2% + fixed fee)
+        1: { rate: 0.0249, fixed: 0.35 },
+        2: { rate: 0, fixed: 0 },
+        3: { rate: 0.015, fixed: 0.35 },
+        4: { rate: 0.1, fixed: 0.1 },
+        5: { rate: 0.0249, fixed: 0.35 },
+        6: { rate: 0.0219, fixed: 0.35 },
+        7: { rate: 0.0199, fixed: 0.35 },
+        8: { rate: 0.0149, fixed: 0.35 },
+        9: { rate: 0.012, fixed: 0.35 },
     };
 
     const calculateFees = () => {
@@ -52,7 +51,6 @@ function PayPalFeeCalculator() {
         setFinalAmount(total.toFixed(2));
     };
 
-    // Trigger recalculation when mode or payment type changes
     useEffect(() => {
         if (amount > 0) {
             if (calculationMode === "fees") {
@@ -108,10 +106,8 @@ function PayPalFeeCalculator() {
                             </RadioGroup>
                         </FormControl>
 
-                        <Typography variant='h5' gutterBottom sx={{ mt: 3 }}>
-                            Betrag
-                        </Typography>
                         <TextField
+                            label='Betrag'
                             fullWidth
                             type='number'
                             inputProps={{ min: 0, step: "any" }}
@@ -122,42 +118,39 @@ function PayPalFeeCalculator() {
                             InputProps={{
                                 endAdornment: <Typography>€</Typography>,
                             }}
-                            sx={{ mb: 3 }}
+                            sx={{ mb: 3, mt: 3 }}
                         />
 
-                        <Typography variant='h5' gutterBottom>
-                            Art der Zahlung
-                        </Typography>
-                        <FormControl fullWidth>
-                            <Select
-                                value={paymentType}
-                                onChange={(e) => setPaymentType(e.target.value)}
-                            >
-                                <MenuItem value={1}>
-                                    Waren oder Dienstleistungen bezahlen
-                                </MenuItem>
-                                <MenuItem value={2}>
-                                    Zahlung an Freunde und Familie
-                                </MenuItem>
-                                <MenuItem value={3}>Spenden sammeln</MenuItem>
-                                <MenuItem value={4}>Mikrozahlung</MenuItem>
-                                <MenuItem value={5}>
-                                    Händlerkonditionen &lt; 2.000 €
-                                </MenuItem>
-                                <MenuItem value={6}>
-                                    Händlerkonditionen 2.000 - 5.000 €
-                                </MenuItem>
-                                <MenuItem value={7}>
-                                    Händlerkonditionen 5.000 - 25.000 €
-                                </MenuItem>
-                                <MenuItem value={8}>
-                                    Händlerkonditionen &gt; 25.000 €
-                                </MenuItem>
-                                <MenuItem value={9}>
-                                    Zahlung mit QR-Code
-                                </MenuItem>
-                            </Select>
-                        </FormControl>
+                        <TextField
+                            select
+                            label='Art der Zahlung'
+                            fullWidth
+                            value={paymentType}
+                            onChange={(e) => setPaymentType(e.target.value)}
+                            sx={{ mb: 3 }}
+                        >
+                            <MenuItem value={1}>
+                                Waren oder Dienstleistungen bezahlen
+                            </MenuItem>
+                            <MenuItem value={2}>
+                                Zahlung an Freunde und Familie
+                            </MenuItem>
+                            <MenuItem value={3}>Spenden sammeln</MenuItem>
+                            <MenuItem value={4}>Mikrozahlung</MenuItem>
+                            <MenuItem value={5}>
+                                Händlerkonditionen &lt; 2.000 €
+                            </MenuItem>
+                            <MenuItem value={6}>
+                                Händlerkonditionen 2.000 - 5.000 €
+                            </MenuItem>
+                            <MenuItem value={7}>
+                                Händlerkonditionen 5.000 - 25.000 €
+                            </MenuItem>
+                            <MenuItem value={8}>
+                                Händlerkonditionen &gt; 25.000 €
+                            </MenuItem>
+                            <MenuItem value={9}>Zahlung mit QR-Code</MenuItem>
+                        </TextField>
 
                         <Button
                             variant='contained'
