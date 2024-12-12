@@ -4,10 +4,8 @@ import {
     Table,
     TableBody,
     TableCell,
-    TableContainer,
     TableHead,
     TableRow,
-    Paper,
 } from "@mui/material";
 
 function FeesOverview() {
@@ -68,11 +66,12 @@ function FeesOverview() {
     ];
 
     return (
-        <TableContainer
-            component={Paper}
-            sx={{ mt: 4, boxShadow: 3, borderRadius: 2 }}
-        >
-            <Typography variant='h6' align='center' sx={{ p: 2 }}>
+        <div>
+            <Typography
+                variant='h4'
+                gutterBottom
+                sx={{ textAlign: "center", mb: 4 }}
+            >
                 PayPal Gebührenübersicht
             </Typography>
             <Table>
@@ -103,7 +102,7 @@ function FeesOverview() {
                     ))}
                 </TableBody>
             </Table>
-        </TableContainer>
+        </div>
     );
 }
 

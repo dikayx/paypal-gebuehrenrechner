@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { FaGithub } from "react-icons/fa"; // Import GitHub icon
+import { FaGithub } from "react-icons/fa";
 import "github-fork-ribbon-css/gh-fork-ribbon.css";
 import "./App.css";
 import Navbar from "./Navbar";
 import PayPalFeeCalculator from "./PayPalFeeCalculator";
 import FeesOverview from "./FeesOverview";
-import { Container, Box, Typography } from "@mui/material";
+import { Container, Box } from "@mui/material";
 
 function App() {
     return (
@@ -21,14 +21,6 @@ function App() {
                         backgroundColor: "white",
                     }}
                 >
-                    <Typography
-                        variant='h4'
-                        gutterBottom
-                        sx={{ textAlign: "center", mb: 4 }}
-                    >
-                        PayPal Gebühren berechnen
-                    </Typography>
-
                     <Routes>
                         <Route path='/' element={<PayPalFeeCalculator />} />
                         <Route

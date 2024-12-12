@@ -72,121 +72,134 @@ function PayPalFeeCalculator() {
     };
 
     return (
-        <Grid container spacing={4} sx={{ mt: 4, px: 2 }}>
-            {/* Left Column: Form */}
-            <Grid item xs={12} md={8}>
-                <Card sx={{ p: 3 }}>
-                    <Typography variant='h5' gutterBottom>
-                        Berechnungsmodus
-                    </Typography>
-                    <FormControl component='fieldset'>
-                        <RadioGroup
-                            row
-                            value={calculationMode}
-                            onChange={(e) => setCalculationMode(e.target.value)}
+        <div>
+            <Typography
+                variant='h4'
+                gutterBottom
+                sx={{ textAlign: "center", mb: 4 }}
+            >
+                PayPal Gebühren berechnen
+            </Typography>
+            <Grid container spacing={4} sx={{ mt: 4, px: 2 }}>
+                {/* Left Column: Form */}
+                <Grid item xs={12} md={8}>
+                    <Card sx={{ p: 3 }}>
+                        <Typography variant='h5' gutterBottom>
+                            Berechnungsmodus
+                        </Typography>
+                        <FormControl component='fieldset'>
+                            <RadioGroup
+                                row
+                                value={calculationMode}
+                                onChange={(e) =>
+                                    setCalculationMode(e.target.value)
+                                }
+                            >
+                                <FormControlLabel
+                                    value='fees'
+                                    control={<Radio />}
+                                    label='Gebühren berechnen'
+                                />
+                                <FormControlLabel
+                                    value='endSum'
+                                    control={<Radio />}
+                                    label='Endsumme berechnen'
+                                />
+                            </RadioGroup>
+                        </FormControl>
+
+                        <Typography variant='h5' gutterBottom sx={{ mt: 3 }}>
+                            Betrag
+                        </Typography>
+                        <TextField
+                            fullWidth
+                            type='number'
+                            inputProps={{ min: 0, step: "any" }}
+                            value={amount}
+                            onChange={(e) =>
+                                setAmount(parseFloat(e.target.value) || 0)
+                            }
+                            InputProps={{
+                                endAdornment: <Typography>€</Typography>,
+                            }}
+                            sx={{ mb: 3 }}
+                        />
+
+                        <Typography variant='h5' gutterBottom>
+                            Art der Zahlung
+                        </Typography>
+                        <FormControl fullWidth>
+                            <Select
+                                value={paymentType}
+                                onChange={(e) => setPaymentType(e.target.value)}
+                            >
+                                <MenuItem value={1}>
+                                    Waren oder Dienstleistungen bezahlen
+                                </MenuItem>
+                                <MenuItem value={2}>
+                                    Zahlung an Freunde und Familie
+                                </MenuItem>
+                                <MenuItem value={3}>Spenden sammeln</MenuItem>
+                                <MenuItem value={4}>Mikrozahlung</MenuItem>
+                                <MenuItem value={5}>
+                                    Händlerkonditionen &lt; 2.000 €
+                                </MenuItem>
+                                <MenuItem value={6}>
+                                    Händlerkonditionen 2.000 - 5.000 €
+                                </MenuItem>
+                                <MenuItem value={7}>
+                                    Händlerkonditionen 5.000 - 25.000 €
+                                </MenuItem>
+                                <MenuItem value={8}>
+                                    Händlerkonditionen &gt; 25.000 €
+                                </MenuItem>
+                                <MenuItem value={9}>
+                                    Zahlung mit QR-Code
+                                </MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        <Button
+                            variant='contained'
+                            color='primary'
+                            fullWidth
+                            sx={{ mt: 3 }}
+                            onClick={handleCalculation}
                         >
-                            <FormControlLabel
-                                value='fees'
-                                control={<Radio />}
-                                label='Gebühren berechnen'
-                            />
-                            <FormControlLabel
-                                value='endSum'
-                                control={<Radio />}
-                                label='Endsumme berechnen'
-                            />
-                        </RadioGroup>
-                    </FormControl>
+                            Berechnen
+                        </Button>
+                    </Card>
+                </Grid>
 
-                    <Typography variant='h5' gutterBottom sx={{ mt: 3 }}>
-                        Betrag
-                    </Typography>
-                    <TextField
-                        fullWidth
-                        type='number'
-                        inputProps={{ min: 0, step: "any" }}
-                        value={amount}
-                        onChange={(e) =>
-                            setAmount(parseFloat(e.target.value) || 0)
-                        }
-                        InputProps={{
-                            endAdornment: <Typography>€</Typography>,
-                        }}
-                        sx={{ mb: 3 }}
-                    />
+                {/* Right Column: Results */}
+                <Grid item xs={12} md={4}>
+                    <Card sx={{ p: 3 }}>
+                        <Typography variant='h5' gutterBottom>
+                            Ergebnis
+                        </Typography>
+                        <Typography variant='body1' gutterBottom>
+                            PayPal Gebühren:
+                        </Typography>
+                        <Typography variant='h6' color='error' gutterBottom>
+                            {calculatedFee ? `${calculatedFee} €` : "-"}
+                        </Typography>
 
-                    <Typography variant='h5' gutterBottom>
-                        Art der Zahlung
-                    </Typography>
-                    <FormControl fullWidth>
-                        <Select
-                            value={paymentType}
-                            onChange={(e) => setPaymentType(e.target.value)}
-                        >
-                            <MenuItem value={1}>
-                                Waren oder Dienstleistungen bezahlen
-                            </MenuItem>
-                            <MenuItem value={2}>
-                                Zahlung an Freunde und Familie
-                            </MenuItem>
-                            <MenuItem value={3}>Spenden sammeln</MenuItem>
-                            <MenuItem value={4}>Mikrozahlung</MenuItem>
-                            <MenuItem value={5}>
-                                Händlerkonditionen &lt; 2.000 €
-                            </MenuItem>
-                            <MenuItem value={6}>
-                                Händlerkonditionen 2.000 - 5.000 €
-                            </MenuItem>
-                            <MenuItem value={7}>
-                                Händlerkonditionen 5.000 - 25.000 €
-                            </MenuItem>
-                            <MenuItem value={8}>
-                                Händlerkonditionen &gt; 25.000 €
-                            </MenuItem>
-                            <MenuItem value={9}>Zahlung mit QR-Code</MenuItem>
-                        </Select>
-                    </FormControl>
+                        <Typography variant='body1' gutterBottom>
+                            Betrag (nach Gebühren):
+                        </Typography>
+                        <Typography variant='h6' color='success' gutterBottom>
+                            {finalAmount ? `${finalAmount} €` : "-"}
+                        </Typography>
 
-                    <Button
-                        variant='contained'
-                        color='primary'
-                        fullWidth
-                        sx={{ mt: 3 }}
-                        onClick={handleCalculation}
-                    >
-                        Berechnen
-                    </Button>
-                </Card>
+                        <Typography variant='body2' color='textSecondary'>
+                            Gebührensatz:{" "}
+                            {(feeRates[paymentType]?.rate * 100).toFixed(2)}% +{" "}
+                            {feeRates[paymentType]?.fixed} €
+                        </Typography>
+                    </Card>
+                </Grid>
             </Grid>
-
-            {/* Right Column: Results */}
-            <Grid item xs={12} md={4}>
-                <Card sx={{ p: 3 }}>
-                    <Typography variant='h5' gutterBottom>
-                        Ergebnis
-                    </Typography>
-                    <Typography variant='body1' gutterBottom>
-                        PayPal Gebühren:
-                    </Typography>
-                    <Typography variant='h6' color='error' gutterBottom>
-                        {calculatedFee ? `${calculatedFee} €` : "-"}
-                    </Typography>
-
-                    <Typography variant='body1' gutterBottom>
-                        Betrag (nach Gebühren):
-                    </Typography>
-                    <Typography variant='h6' color='success' gutterBottom>
-                        {finalAmount ? `${finalAmount} €` : "-"}
-                    </Typography>
-
-                    <Typography variant='body2' color='textSecondary'>
-                        Gebührensatz:{" "}
-                        {(feeRates[paymentType]?.rate * 100).toFixed(2)}% +{" "}
-                        {feeRates[paymentType]?.fixed} €
-                    </Typography>
-                </Card>
-            </Grid>
-        </Grid>
+        </div>
     );
 }
 
