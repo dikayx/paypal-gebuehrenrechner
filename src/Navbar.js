@@ -25,7 +25,7 @@ function Navbar() {
     const drawerContent = (
         <Box sx={{ width: 250 }} onClick={handleDrawerToggle}>
             <List>
-                <ListItem button component={Link} to='/fees-overview'>
+                <ListItem button component={Link} to='/fees'>
                     <ListItemText primary='Gebührenübersicht' />
                 </ListItem>
             </List>
@@ -61,7 +61,7 @@ function Navbar() {
                         <Button
                             color='inherit'
                             component={Link}
-                            to='/fees-overview'
+                            to='/fees'
                             sx={{ textTransform: "none" }}
                         >
                             Gebührenübersicht

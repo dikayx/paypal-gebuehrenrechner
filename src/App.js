@@ -23,10 +23,7 @@ function App() {
                 >
                     <Routes>
                         <Route path='/' element={<PayPalFeeCalculator />} />
-                        <Route
-                            path='/fees-overview'
-                            element={<FeesOverview />}
-                        />
+                        <Route path='/fees' element={<FeesOverview />} />
                     </Routes>
                 </Box>
             </Container>
