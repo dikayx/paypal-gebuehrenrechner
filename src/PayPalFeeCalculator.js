@@ -20,6 +20,7 @@ function PayPalFeeCalculator() {
     const [finalAmount, setFinalAmount] = useState("");
     const [sliderPosition, setSliderPosition] = useState(0);
     const [dragging, setDragging] = useState(false);
+    const [error, setError] = useState("");
 
     const feeRates = {
         1: { rate: 0.0249, fixed: 0.35 }, // Waren oder Dienstleistungen bezahlen
@@ -75,6 +76,14 @@ function PayPalFeeCalculator() {
     }, [calculationMode, paymentType]);
 
     const handleCalculation = () => {
+        if (!amount || parseFloat(amount) <= 0) {
+            setError("Bitte geben Sie einen gültigen Betrag größer als 0 ein.");
+            setCalculatedFee("");
+            setFinalAmount("");
+            return;
+        }
+        setError(""); // Clear any previous error
+
         if (calculationMode === "fees") {
             calculateFees();
         } else {
@@ -249,6 +258,8 @@ function PayPalFeeCalculator() {
                                 endAdornment: <Typography>€</Typography>,
                             }}
                             sx={{ mb: 3, mt: 3 }}
+                            error={!!error}
+                            helperText={error}
                         />
 
                         <TextField
