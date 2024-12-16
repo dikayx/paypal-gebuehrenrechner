@@ -3,14 +3,14 @@ import {
     Grid,
     TextField,
     Typography,
-    FormControl,
-    FormControlLabel,
-    RadioGroup,
-    Radio,
     Button,
     Card,
     MenuItem,
+    ToggleButton,
+    ToggleButtonGroup,
+    Box,
 } from "@mui/material";
+import { useDrag } from "@use-gesture/react";
 
 function PayPalFeeCalculator() {
     const [calculationMode, setCalculationMode] = useState("fees"); // "fees" or "endSum"
@@ -18,17 +18,30 @@ function PayPalFeeCalculator() {
     const [paymentType, setPaymentType] = useState(1);
     const [calculatedFee, setCalculatedFee] = useState("");
     const [finalAmount, setFinalAmount] = useState("");
+    const [sliderPosition, setSliderPosition] = useState(0);
+    const [dragging, setDragging] = useState(false);
 
     const feeRates = {
-        1: { rate: 0.0249, fixed: 0.35 },
-        2: { rate: 0, fixed: 0 },
-        3: { rate: 0.015, fixed: 0.35 },
-        4: { rate: 0.1, fixed: 0.1 },
-        5: { rate: 0.0249, fixed: 0.35 },
-        6: { rate: 0.0219, fixed: 0.35 },
-        7: { rate: 0.0199, fixed: 0.35 },
-        8: { rate: 0.0149, fixed: 0.35 },
-        9: { rate: 0.012, fixed: 0.35 },
+        1: { rate: 0.0249, fixed: 0.35 }, // Waren oder Dienstleistungen bezahlen
+        2: { rate: 0, fixed: 0 }, // Zahlung an Freunde und Familie (Kostenfrei für Inlandsüberweisungen)
+        3: { rate: 0.015, fixed: 0.35 }, // Spenden sammeln
+        4: { rate: 0.1, fixed: 0.1 }, // Mikrozahlung (Inländisch unter 5 €)
+        5: { rate: 0.0249, fixed: 0.35 }, // Händlerkonditionen < 2.000 €
+        6: { rate: 0.0219, fixed: 0.35 }, // Händlerkonditionen 2.000 - 5.000 €
+        7: { rate: 0.0199, fixed: 0.35 }, // Händlerkonditionen 5.000 - 25.000 €
+        8: { rate: 0.0149, fixed: 0.35 }, // Händlerkonditionen > 25.000 €
+        9: { rate: 0.012, fixed: 0.35 }, // Zahlung mit QR-Code
+    };
+
+    useEffect(() => {
+        // Sync position with state changes for clicks
+        setSliderPosition(calculationMode === "fees" ? 0 : 50);
+    }, [calculationMode]);
+
+    const handleModeChange = (event, newMode) => {
+        if (newMode !== null) {
+            setCalculationMode(newMode);
+        }
     };
 
     const calculateFees = () => {
@@ -69,6 +82,27 @@ function PayPalFeeCalculator() {
         }
     };
 
+    // Gesture for sliding
+    const bind = useDrag(({ down, movement: [mx], direction: [dx], event }) => {
+        event.preventDefault();
+        if (down) {
+            setDragging(true);
+            // Clamp slider movement between 0% and 50%
+            const newPos = Math.max(0, Math.min(50, mx / 2));
+            setSliderPosition(newPos);
+        } else {
+            setDragging(false);
+            // Snap to the nearest option when dragging stops
+            if (sliderPosition > 25) {
+                setCalculationMode("endSum");
+                setSliderPosition(50);
+            } else {
+                setCalculationMode("fees");
+                setSliderPosition(0);
+            }
+        }
+    });
+
     return (
         <div>
             <Typography
@@ -85,36 +119,132 @@ function PayPalFeeCalculator() {
                         <Typography variant='h5' gutterBottom>
                             Berechnungsmodus
                         </Typography>
-                        <FormControl component='fieldset'>
-                            <RadioGroup
-                                row
-                                value={calculationMode}
-                                onChange={(e) =>
-                                    setCalculationMode(e.target.value)
-                                }
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                mt: 2,
+                                mb: 2,
+                                width: "100%",
+                            }}
+                        >
+                            <Box
+                                sx={{
+                                    position: "relative",
+                                    width: "100%",
+                                    maxWidth: "500px",
+                                    height: "48px",
+                                    borderRadius: "25px",
+                                    backgroundColor: "#e0e0e0",
+                                    overflow: "hidden",
+                                    userSelect: "none",
+                                    touchAction: "none",
+                                }}
+                                {...bind()}
                             >
-                                <FormControlLabel
-                                    value='fees'
-                                    control={<Radio />}
-                                    label='Gebühren berechnen'
+                                {/* Sliding Background */}
+                                <Box
+                                    sx={{
+                                        position: "absolute",
+                                        top: 0,
+                                        bottom: 0,
+                                        left:
+                                            calculationMode === "fees"
+                                                ? "0%"
+                                                : "50%",
+                                        width: "50%",
+                                        backgroundColor: "#1976d2",
+                                        borderRadius: "inherit",
+                                        transition: "left 0.3s ease",
+                                    }}
                                 />
-                                <FormControlLabel
-                                    value='endSum'
-                                    control={<Radio />}
-                                    label='Endsumme berechnen'
-                                />
-                            </RadioGroup>
-                        </FormControl>
+                                {/* Toggle Buttons */}
+                                <ToggleButtonGroup
+                                    value={calculationMode}
+                                    exclusive
+                                    onChange={handleModeChange}
+                                    sx={{
+                                        position: "relative",
+                                        zIndex: 1,
+                                        width: "100%",
+                                        height: "100%",
+                                        "& .MuiToggleButtonGroup-grouped": {
+                                            border: "none",
+                                            color: "#000",
+                                            backgroundColor: "transparent",
+                                            fontSize: "0.875rem",
+                                            transition: "none",
+                                            "&.Mui-selected": {
+                                                color: "#fff",
+                                                backgroundColor: "transparent",
+                                            },
+                                            "&:hover": {
+                                                backgroundColor:
+                                                    "transparent !important",
+                                            },
+                                            "&.Mui-focusVisible": {
+                                                outline: "none",
+                                            },
+                                        },
+                                    }}
+                                >
+                                    <ToggleButton
+                                        value='fees'
+                                        disableRipple
+                                        sx={{
+                                            flex: 1,
+                                            textTransform: "none",
+                                            borderRadius: "inherit",
+                                        }}
+                                    >
+                                        Gebühren berechnen
+                                    </ToggleButton>
+                                    <ToggleButton
+                                        value='endSum'
+                                        disableRipple
+                                        sx={{
+                                            flex: 1,
+                                            textTransform: "none",
+                                            borderRadius: "inherit",
+                                        }}
+                                    >
+                                        Endsumme berechnen
+                                    </ToggleButton>
+                                </ToggleButtonGroup>
+                            </Box>
+                        </Box>
 
                         <TextField
                             label='Betrag'
+                            placeholder='0'
                             fullWidth
-                            type='number'
-                            inputProps={{ min: 0, step: "any" }}
-                            value={amount}
-                            onChange={(e) =>
-                                setAmount(parseFloat(e.target.value) || 0)
-                            }
+                            type='text'
+                            value={amount === 0 ? "" : amount}
+                            onChange={(e) => {
+                                const inputValue = e.target.value;
+                                const normalizedValue = inputValue.replace(
+                                    ",",
+                                    "."
+                                );
+                                if (
+                                    normalizedValue === "" ||
+                                    /^\d*\.?\d*$/.test(normalizedValue)
+                                ) {
+                                    setAmount(normalizedValue);
+                                }
+                            }}
+                            onBlur={() => {
+                                setAmount((prev) => {
+                                    if (prev === "" || isNaN(parseFloat(prev)))
+                                        return 0;
+
+                                    const numericValue = parseFloat(prev);
+                                    return Number.isInteger(numericValue)
+                                        ? numericValue.toString()
+                                        : numericValue.toFixed(2);
+                                });
+                            }}
                             InputProps={{
                                 endAdornment: <Typography>€</Typography>,
                             }}
