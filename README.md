@@ -1,4 +1,4 @@
-# PayPal Fee Calculator
+# PayPal Gebührenrechner (PayPal Fee Calculator)
 
 This is a simple PayPal fee calculator that calculates the fees for sending and receiving money through PayPal. It also calculates the net amount that you will receive after the fees are deducted.
 
@@ -8,12 +8,12 @@ This is a simple PayPal fee calculator that calculates the fees for sending and 
 
 ## Installation
 
-This is only necessary, if you want to run the application locally. Visit the [live version](https://dikayx.github.io/paypal-fee-calculator) if you just want to use the calculator.
+This is only necessary, if you want to run the application locally. Visit the [live version](https://dikayx.github.io/paypal-gebuehrenrechner) if you just want to use the calculator.
 
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/dikayx/paypal-fee-calculator
+    git clone https://github.com/dikayx/paypal-gebuehrenrechner
     ```
 
 2. Install the dependencies:

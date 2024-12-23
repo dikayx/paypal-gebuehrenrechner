@@ -10,7 +10,7 @@ import { Container, Box } from "@mui/material";
 
 function App() {
     return (
-        <Router basename='/paypal-fee-calculator'>
+        <Router basename='/paypal-gebuehrenrechner'>
             <Navbar />
             <Container maxWidth='lg' sx={{ mt: 4 }}>
                 <Box
@@ -23,7 +23,7 @@ function App() {
                 >
                     <Routes>
                         <Route path='/' element={<PayPalFeeCalculator />} />
-                        <Route path='/fees' element={<FeesOverview />} />
+                        <Route path='/gebuehren' element={<FeesOverview />} />
                     </Routes>
                 </Box>
             </Container>
@@ -31,7 +31,7 @@ function App() {
             {/* GitHub Fork Ribbon (Desktop view) */}
             <a
                 className='github-fork-ribbon right-bottom'
-                href='https://github.com/dikayx/paypal-fee-calculator'
+                href='https://github.com/dikayx/paypal-gebuehrenrechner'
                 data-ribbon='Fork me on GitHub'
                 title='Fork me on GitHub'
             >
@@ -41,7 +41,7 @@ function App() {
             {/* GitHub Circle Badge (Mobile view) */}
             <a
                 className='github-circle right-bottom-mobile'
-                href='https://github.com/dikayx/paypal-fee-calculator'
+                href='https://github.com/dikayx/paypal-gebuehrenrechner'
                 title='Fork me on GitHub'
             >
                 <FaGithub className='github-icon' />
