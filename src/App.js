@@ -10,7 +10,11 @@ import { Container, Box } from "@mui/material";
 
 function App() {
     return (
-        <Router basename='/paypal-gebuehrenrechner'>
+        <Router
+            basename='/paypal-gebuehrenrechner'
+            // Getting ready for React Router v7
+            future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+        >
             <Navbar />
             <Container maxWidth='lg' sx={{ mt: 4 }}>
                 <Box
